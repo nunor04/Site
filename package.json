@@ -1,6 +1,6 @@
 {
   "name": "scrolly-kirk",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "private": true,
   "description": "Scrolly Kirk: Instagram in a phone-style window",
   "main": "main.js",

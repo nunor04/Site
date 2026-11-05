@@ -6,23 +6,24 @@
   <title>Scrolly Kirk</title>
   <style>
     :root { color-scheme: light dark; }
-    body { font: 16px/1.6 system-ui, sans-serif; max-width: 40rem; margin: 0 auto; padding: 2rem 16px; }
+    body { font: 16px/1.6 system-ui, sans-serif; max-width: 36rem; margin: 0 auto; padding: 3rem 16px; }
     code { background: rgba(127,127,127,.2); padding: .1em .35em; border-radius: 4px; }
+    details { margin-top: 1.5rem; opacity: .8; }
+    summary { cursor: pointer; }
   </style>
 </head>
 <body>
   <h1>Scrolly Kirk</h1>
-  <p>Instagram with our modifications: a per-video volume control and a phone-style desktop app.</p>
+  <p>Instagram with a per-video volume bar.</p>
+  <p><a href="https://www.instagram.com/">Open Instagram</a></p>
 
-  <h2>Use it in your normal browser (Chrome, Edge, Brave)</h2>
-  <ol>
-    <li>Download or clone <a href="https://github.com/nunor04/ScrollyKirk">the repository</a>.</li>
-    <li>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>.</li>
-    <li>Click <strong>Load unpacked</strong> and choose the <code>extension</code> folder.</li>
-    <li>Open <a href="https://www.instagram.com/">instagram.com</a>. Hover over a video to see its volume bar.</li>
-  </ol>
-
-  <h2>Use the desktop app</h2>
-  <p>Run <code>npm install</code> once, then <code>npm start</code> (on Windows PowerShell: <code>npm.cmd start</code>).</p>
+  <details>
+    <summary>How to install</summary>
+    <ol>
+      <li>Get the <a href="https://github.com/nunor04/Site">repository</a> and open <code>chrome://extensions</code>.</li>
+      <li>Turn on <strong>Developer mode</strong>, click <strong>Load unpacked</strong>, choose the <code>extension</code> folder.</li>
+    </ol>
+    <p>Desktop app: <code>npm install</code>, then <code>npm start</code>.</p>
+  </details>
 </body>
 </html>
