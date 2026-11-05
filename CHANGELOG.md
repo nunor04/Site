@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.2.2
+- Stay logged in: login cookies without an expiry now get a 1-year expiry, and cookies are flushed to disk every 15s and on quit.
+
 ## 1.2.1
 - Volume control now shows on any page with video (feed, stories, reels), not just Reels.
 - Mute now works at the app level, so Instagram cannot override it.

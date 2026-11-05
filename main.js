@@ -33,6 +33,34 @@ function createWindow() {
   const ses = session.fromPartition("persist:instagram"); // keeps you logged in
   ses.setUserAgent(MOBILE_UA);
 
+  // Stay logged in: Instagram sets some login cookies without an expiry date,
+  // and Electron drops those when the app closes. Give them a 1-year expiry,
+  // and flush cookies to disk regularly and on quit.
+  const ONE_YEAR = 60 * 60 * 24 * 365;
+  ses.cookies.on("changed", (_e, cookie, _cause, removed) => {
+    if (removed || !cookie.session) return;
+    const host = cookie.domain.replace(/^\./, "");
+    ses.cookies
+      .set({
+        url: `https://${host}${cookie.path || "/"}`,
+        name: cookie.name,
+        value: cookie.value,
+        domain: cookie.domain,
+        path: cookie.path,
+        secure: cookie.secure,
+        httpOnly: cookie.httpOnly,
+        sameSite: cookie.sameSite,
+        expirationDate: Math.floor(Date.now() / 1000) + ONE_YEAR,
+      })
+      .catch(() => {});
+  });
+  const flush = () => {
+    ses.cookies.flushStore().catch(() => {});
+    ses.flushStorageData();
+  };
+  setInterval(flush, 15000);
+  app.on("before-quit", flush);
+
   const win = new BrowserWindow({
     width: 480,
     height: 900,
