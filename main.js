@@ -1,4 +1,4 @@
-const { app, BrowserWindow, WebContentsView, session, shell } = require("electron");
+const { app, BrowserWindow, WebContentsView, ipcMain, session, shell } = require("electron");
 const fs = require("fs");
 const path = require("path");
 
@@ -7,10 +7,12 @@ app.commandLine.appendSwitch("ignore-gpu-blocklist");
 app.commandLine.appendSwitch("enable-gpu-rasterization");
 app.commandLine.appendSwitch("enable-zero-copy");
 
-// Pretend to be an iPhone so Instagram serves its mobile layout.
+// Identify as Chrome on Android: Instagram serves its mobile layout, and the
+// identity matches the real engine (Chromium), so it sends video/code that
+// this engine handles well (a fake iPhone/Safari UA can trigger slower paths).
 const MOBILE_UA =
-  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 " +
-  "(KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1";
+  "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) " +
+  `Chrome/${process.versions.chrome} Mobile Safari/537.36`;
 
 // The phone column never gets wider than this, so in full screen it stays
 // centered and all icons stay lined up instead of stretching across the screen.
@@ -43,6 +45,7 @@ function createWindow() {
   const view = new WebContentsView({
     webPreferences: {
       session: ses,
+      preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
@@ -66,6 +69,10 @@ function createWindow() {
 
   const wc = view.webContents;
   wc.setUserAgent(MOBILE_UA);
+
+  ipcMain.on("sk-mute", (event, muted) => {
+    if (event.sender === wc) wc.setAudioMuted(!!muted);
+  });
 
   const volumeScript = fs.readFileSync(path.join(__dirname, "volume.js"), "utf8");
   const inject = () => wc.executeJavaScript(volumeScript).catch(() => {});

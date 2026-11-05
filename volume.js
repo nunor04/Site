@@ -70,8 +70,13 @@
     apply();
   }
 
+  let lastSentMute = null;
   function apply() {
-    document.querySelectorAll("video").forEach(function (v) {
+    if (lastSentMute !== muted && window.skAudio) {
+      window.skAudio.setMuted(muted);
+      lastSentMute = muted;
+    }
+    document.querySelectorAll("video, audio").forEach(function (v) {
       if (v.muted !== muted) v.muted = muted;
       if (Math.abs(v.volume - volume) > 0.001) v.volume = volume;
     });
@@ -114,10 +119,10 @@
 
   // Instagram resets volume/mute on each new reel, so keep re-applying.
   setInterval(function () {
-    const onReels = location.pathname.indexOf("/reel") !== -1;
+    // Show on any page that has a video (reels, feed, stories, profiles).
     const hasVideo = !!document.querySelector("video");
-    box.style.display = onReels && hasVideo ? "flex" : "none";
-    if (hasVideo) apply();
+    box.style.display = hasVideo ? "flex" : "none";
+    apply();
   }, 300);
 
   render();
