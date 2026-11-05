@@ -8,6 +8,11 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.2.0
+- Full screen: the phone column stays centered at a fixed width, so icons and layout stay lined up.
+- Reels: added an accessible volume slider and mute button (M = mute, Alt+Up/Down = volume), remembered between launches.
+- Speed: GPU rasterization, no background throttling, no spellcheck (best effort).
+
 ## 1.1.0
 - Phone-style wrapper: a desktop app (Electron) that opens Instagram in a phone-sized window using the mobile layout.
 - Login is kept between launches. Links to other sites open in your normal browser.
