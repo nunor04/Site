@@ -1,6 +1,13 @@
 {
   "name": "scrolly-kirk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Scrolly Kirk website"
+  "description": "Scrolly Kirk: Instagram in a phone-style window",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
 }
