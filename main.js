@@ -104,6 +104,15 @@ function createWindow() {
 
   const volumeScript = fs.readFileSync(path.join(__dirname, "volume.js"), "utf8");
   const inject = () => wc.executeJavaScript(volumeScript).catch(() => {});
+  // Phone-style: no scrollbars, no sideways scrolling.
+  const hideBars = () =>
+    wc
+      .insertCSS(
+        "html, body { overflow-x: hidden !important; } " +
+          "::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }"
+      )
+      .catch(() => {});
+  wc.on("dom-ready", hideBars);
   wc.on("dom-ready", inject);
   wc.on("did-navigate-in-page", inject);
 
