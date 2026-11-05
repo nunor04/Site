@@ -8,6 +8,11 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.3.0
+- Volume control redesigned: a slim bar per video (replaces the single mute button), hidden until you hover the video. Slider at 0 = muted; M mutes, Alt+Up/Down changes volume.
+- Browser extension (extension/): the same modifications in Chrome/Edge/Brave on instagram.com. Install steps are on the site page (index.html).
+- Keep extension/manifest.json version in sync with package.json.
+
 ## 1.2.3
 - Hide scrollbars and block sideways scrolling (phone-style).
 

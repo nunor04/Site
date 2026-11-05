@@ -1,4 +1,4 @@
-const { app, BrowserWindow, WebContentsView, ipcMain, session, shell } = require("electron");
+const { app, BrowserWindow, WebContentsView, session, shell } = require("electron");
 const fs = require("fs");
 const path = require("path");
 
@@ -73,7 +73,6 @@ function createWindow() {
   const view = new WebContentsView({
     webPreferences: {
       session: ses,
-      preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
@@ -98,11 +97,7 @@ function createWindow() {
   const wc = view.webContents;
   wc.setUserAgent(MOBILE_UA);
 
-  ipcMain.on("sk-mute", (event, muted) => {
-    if (event.sender === wc) wc.setAudioMuted(!!muted);
-  });
-
-  const volumeScript = fs.readFileSync(path.join(__dirname, "volume.js"), "utf8");
+  const volumeScript = fs.readFileSync(path.join(__dirname, "extension", "volume.js"), "utf8");
   const inject = () => wc.executeJavaScript(volumeScript).catch(() => {});
   // Phone-style: no scrollbars, no sideways scrolling.
   const hideBars = () =>
