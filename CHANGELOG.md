@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.4.1
+- Site: Open Instagram now opens a phone-sized window, so Instagram shows its mobile layout in a normal browser.
+
 ## 1.4.0
 - Single-file Windows app: run `npm run dist` to build dist/Scrolly-Kirk-<version>.exe, a portable app you double-click (no install, no terminal).
 

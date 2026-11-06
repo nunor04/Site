@@ -15,7 +15,14 @@
 <body>
   <h1>Scrolly Kirk</h1>
   <p>Instagram with a per-video volume bar.</p>
-  <p><a href="https://www.instagram.com/">Open Instagram</a></p>
+  <p><a id="phone" href="https://www.instagram.com/">Open Instagram (phone size)</a></p>
+  <script>
+    // A narrow window makes Instagram switch to its mobile layout.
+    document.getElementById("phone").addEventListener("click", function (e) {
+      var w = window.open(this.href, "scrollykirk", "popup=yes,width=430,height=900");
+      if (w) e.preventDefault(); // if popups are blocked, the normal link still works
+    });
+  </script>
 
   <details>
     <summary>How to install</summary>
