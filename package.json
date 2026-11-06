@@ -1,6 +1,6 @@
 {
   "name": "scrolly-kirk",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "private": true,
   "description": "Scrolly Kirk: Instagram in a phone-style window",
   "main": "main.js",
@@ -17,7 +17,7 @@
     "productName": "Scrolly Kirk",
     "files": [
       "main.js",
-      "extension/volume.js",
+      "extension/*.js",
       "package.json"
     ],
     "directories": {

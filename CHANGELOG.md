@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.5.0
+- Most viewed: on a profile with reels, a Most viewed button loads the reels and lists them sorted by the view counts Instagram shows (app and extension).
+
 ## 1.4.1
 - Site: Open Instagram now opens a phone-sized window, so Instagram shows its mobile layout in a normal browser.
 

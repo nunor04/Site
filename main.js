@@ -97,7 +97,9 @@ function createWindow() {
   const wc = view.webContents;
   wc.setUserAgent(MOBILE_UA);
 
-  const volumeScript = fs.readFileSync(path.join(__dirname, "extension", "volume.js"), "utf8");
+  const volumeScript = ["volume.js", "mostviewed.js"]
+    .map((f) => fs.readFileSync(path.join(__dirname, "extension", f), "utf8"))
+    .join("\n;\n");
   const inject = () => wc.executeJavaScript(volumeScript).catch(() => {});
   // Phone-style: no scrollbars, no sideways scrolling.
   const hideBars = () =>
