@@ -7,12 +7,11 @@ app.commandLine.appendSwitch("ignore-gpu-blocklist");
 app.commandLine.appendSwitch("enable-gpu-rasterization");
 app.commandLine.appendSwitch("enable-zero-copy");
 
-// Identify as Chrome on Android: Instagram serves its mobile layout, and the
-// identity matches the real engine (Chromium), so it sends video/code that
-// this engine handles well (a fake iPhone/Safari UA can trigger slower paths).
+// Identify as an iPhone: Instagram serves its mobile layout with normal links.
+// (An Android identity makes Instagram turn profile tiles into "open the Android app" links.)
 const MOBILE_UA =
-  "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) " +
-  `Chrome/${process.versions.chrome} Mobile Safari/537.36`;
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 " +
+  "(KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1";
 
 // The phone column never gets wider than this, so in full screen it stays
 // centered and all icons stay lined up instead of stretching across the screen.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Scrolly Kirk",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Instagram with a per-video volume control and other Scrolly Kirk modifications.",
   "content_scripts": [
     {

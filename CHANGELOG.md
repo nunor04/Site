@@ -8,6 +8,11 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.6.1
+- Fix Most viewed not appearing: the button now shows on every profile, and reels are found by their view-count text instead of /reel/ links.
+- Switch back to an iPhone identity: the Android one made Instagram turn profile tiles into open-the-Android-app links.
+- Clicking a ranked reel opens the original tile.
+
 ## 1.6.0
 - Site redesign: animated background, glowing version badge (read live from package.json), 3D phone mockup, scroll and hover effects.
 
