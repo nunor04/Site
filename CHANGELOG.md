@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.7.2
+- Firefox support: extension manifest now has a Firefox id, and the site shows Firefox install steps (first when you are on Firefox).
+
 ## 1.7.1
 - Secret protection: a pre-commit check blocks API keys, tokens, cookies and secret files; more secret file types are git-ignored.
 

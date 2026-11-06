@@ -164,10 +164,11 @@
         <div class="card reveal"><div class="ico">&#128273;</div><h3>Stays logged in</h3><p>The desktop app remembers your account between launches.</p></div>
       </div>
 
-      <details class="reveal">
+      <details class="reveal" id="get">
         <summary>Get the app or extension</summary>
-        <p>Desktop app: run <code>npm install</code> then <code>npm start</code>, or build the single <code>.exe</code> with <code>npm run dist</code>.</p>
-        <p>Browser extension: open <code>chrome://extensions</code>, turn on Developer mode, click Load unpacked and choose the <code>extension</code> folder of the <a href="https://github.com/nunor04/Site" style="color:var(--c)">repository</a>.</p>
+        <p><strong>Desktop app</strong> (works everywhere, nothing else needed): run <code>npm install</code> then <code>npm start</code>, or build the single <code>.exe</code> with <code>npm run dist</code>.</p>
+        <p id="ff"><strong>Firefox</strong> (temporary, until you close Firefox): open <code>about:debugging#/runtime/this-firefox</code>, click <em>Load Temporary Add-on</em>, and choose <code>extension/manifest.json</code> from the <a href="https://github.com/nunor04/Site" style="color:var(--c)">repository</a>.</p>
+        <p id="ch"><strong>Chrome, Edge, Brave:</strong> open <code>chrome://extensions</code>, turn on Developer mode, click <em>Load unpacked</em> and choose the <code>extension</code> folder.</p>
       </details>
     </section>
 
@@ -186,6 +187,12 @@
         "popup=yes,width=" + wd + ",height=" + h + ",left=" + left + ",top=" + top);
       if (w) e.preventDefault();
     });
+
+    // Show Firefox steps first when you are on Firefox.
+    if (/firefox/i.test(navigator.userAgent)) {
+      var g = document.getElementById("get"), ff = document.getElementById("ff");
+      g.insertBefore(ff, g.children[1]); g.open = true;
+    }
 
     // Show the real version from package.json so it never goes stale.
     fetch("package.json").then(function (r) { return r.json(); }).then(function (p) {
