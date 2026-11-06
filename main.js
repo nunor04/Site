@@ -15,7 +15,24 @@ const MOBILE_UA =
 
 // The phone column never gets wider than this, so in full screen it stays
 // centered and all icons stay lined up instead of stretching across the screen.
-const MAX_PHONE_WIDTH = 480;
+const MAX_PHONE_WIDTH = 560;
+
+// Page zoom: starts a bit zoomed out so more fits on screen; Ctrl+ / Ctrl- / Ctrl+0 to adjust.
+const DEFAULT_ZOOM = 0.85;
+const settingsFile = () => path.join(app.getPath("userData"), "settings.json");
+function loadZoom() {
+  try {
+    const z = JSON.parse(fs.readFileSync(settingsFile(), "utf8")).zoom;
+    return typeof z === "number" && z >= 0.5 && z <= 1.5 ? z : DEFAULT_ZOOM;
+  } catch {
+    return DEFAULT_ZOOM;
+  }
+}
+function saveZoom(z) {
+  try {
+    fs.writeFileSync(settingsFile(), JSON.stringify({ zoom: z }));
+  } catch {}
+}
 
 const ALLOWED_HOSTS = ["instagram.com", "cdninstagram.com", "facebook.com", "fbcdn.net"];
 
@@ -60,10 +77,10 @@ function createWindow() {
   setInterval(flush, 15000);
   app.on("before-quit", flush);
 
-  // Open as a real phone shape (9:19.5) that fits the screen height.
+  // Open big: nearly the full screen height, in a tall phone shape (1:2).
   const work = screen.getPrimaryDisplay().workAreaSize;
-  const startH = Math.min(work.height - 40, 1000);
-  const startW = Math.max(360, Math.min(Math.round((startH * 9) / 19.5), MAX_PHONE_WIDTH));
+  const startH = Math.min(work.height - 20, 1200);
+  const startW = Math.max(360, Math.min(Math.round(startH / 2), MAX_PHONE_WIDTH));
 
   const win = new BrowserWindow({
     width: startW,
@@ -101,6 +118,21 @@ function createWindow() {
 
   const wc = view.webContents;
   wc.setUserAgent(MOBILE_UA);
+
+  let zoom = loadZoom();
+  const applyZoom = () => wc.setZoomFactor(zoom);
+  wc.on("dom-ready", applyZoom);
+  wc.on("before-input-event", (event, input) => {
+    if (input.type !== "keyDown" || !input.control) return;
+    if (input.key === "=" || input.key === "+") zoom = Math.min(1.5, zoom + 0.05);
+    else if (input.key === "-") zoom = Math.max(0.5, zoom - 0.05);
+    else if (input.key === "0") zoom = DEFAULT_ZOOM;
+    else return;
+    event.preventDefault();
+    zoom = Math.round(zoom * 100) / 100;
+    applyZoom();
+    saveZoom(zoom);
+  });
 
   const volumeScript = ["volume.js", "mostviewed.js"]
     .map((f) => fs.readFileSync(path.join(__dirname, "extension", f), "utf8"))

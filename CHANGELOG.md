@@ -8,6 +8,10 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.7.0
+- Bigger window (nearly full screen height) and a wider phone column (up to 560px), in the app and the site popup.
+- App starts zoomed out (85%) so more fits and it is easier to navigate. Ctrl+ / Ctrl- / Ctrl+0 adjust the zoom, and it is remembered.
+
 ## 1.6.2
 - Phone window now opens in a real phone shape (9:19.5) sized to your screen height and centered, in both the app and the site popup.
 
