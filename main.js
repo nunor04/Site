@@ -1,4 +1,4 @@
-const { app, BrowserWindow, WebContentsView, session, shell } = require("electron");
+const { app, BrowserWindow, WebContentsView, screen, session, shell } = require("electron");
 const fs = require("fs");
 const path = require("path");
 
@@ -60,9 +60,15 @@ function createWindow() {
   setInterval(flush, 15000);
   app.on("before-quit", flush);
 
+  // Open as a real phone shape (9:19.5) that fits the screen height.
+  const work = screen.getPrimaryDisplay().workAreaSize;
+  const startH = Math.min(work.height - 40, 1000);
+  const startW = Math.max(360, Math.min(Math.round((startH * 9) / 19.5), MAX_PHONE_WIDTH));
+
   const win = new BrowserWindow({
-    width: 480,
-    height: 900,
+    width: startW,
+    height: startH,
+    center: true,
     minWidth: 360,
     title: "Scrolly Kirk",
     backgroundColor: "#000000",

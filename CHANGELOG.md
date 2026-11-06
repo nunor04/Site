@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.6.2
+- Phone window now opens in a real phone shape (9:19.5) sized to your screen height and centered, in both the app and the site popup.
+
 ## 1.6.1
 - Fix Most viewed not appearing: the button now shows on every profile, and reels are found by their view-count text instead of /reel/ links.
 - Switch back to an iPhone identity: the Android one made Instagram turn profile tiles into open-the-Android-app links.

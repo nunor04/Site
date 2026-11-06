@@ -177,7 +177,13 @@
   <script>
     // Phone-size window: a narrow window makes Instagram use its mobile layout.
     document.getElementById("phone").addEventListener("click", function (e) {
-      var w = window.open(this.href, "scrollykirk", "popup=yes,width=430,height=900");
+      // Real phone shape (9:19.5) that fits the screen height, centered.
+      var h = Math.min(screen.availHeight - 40, 1000);
+      var wd = Math.max(360, Math.min(Math.round(h * 9 / 19.5), 480));
+      var left = Math.round((screen.availLeft || 0) + (screen.availWidth - wd) / 2);
+      var top = Math.round((screen.availTop || 0) + (screen.availHeight - h) / 2);
+      var w = window.open(this.href, "scrollykirk",
+        "popup=yes,width=" + wd + ",height=" + h + ",left=" + left + ",top=" + top);
       if (w) e.preventDefault();
     });
 
