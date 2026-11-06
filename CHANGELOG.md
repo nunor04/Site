@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.7.1
+- Secret protection: a pre-commit check blocks API keys, tokens, cookies and secret files; more secret file types are git-ignored.
+
 ## 1.7.0
 - Bigger window (nearly full screen height) and a wider phone column (up to 560px), in the app and the site popup.
 - App starts zoomed out (85%) so more fits and it is easier to navigate. Ctrl+ / Ctrl- / Ctrl+0 adjust the zoom, and it is remembered.

@@ -1,12 +1,14 @@
 {
   "name": "scrolly-kirk",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "description": "Scrolly Kirk: Instagram in a phone-style window",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win portable"
+    "dist": "electron-builder --win portable",
+    "check-secrets": "node scripts/check-secrets.js",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "devDependencies": {
     "electron": "^33.2.0",
