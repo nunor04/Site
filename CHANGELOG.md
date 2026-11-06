@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.6.0
+- Site redesign: animated background, glowing version badge (read live from package.json), 3D phone mockup, scroll and hover effects.
+
 ## 1.5.0
 - Most viewed: on a profile with reels, a Most viewed button loads the reels and lists them sorted by the view counts Instagram shows (app and extension).
 
