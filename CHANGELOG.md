@@ -8,6 +8,9 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.8.1
+- Site: if the browser blocks the scrollykirk:// link (Firefox can), show a message with what to do instead of failing silently.
+
 ## 1.8.0
 - Start the app from a website: the app registers a scrollykirk:// link with Windows, and the site button Open the Scrolly Kirk app launches it (works from Firefox, Chrome, anything).
 - Only one copy runs; opening it again focuses the open window.

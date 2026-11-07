@@ -143,6 +143,7 @@
           <a class="btn primary" id="app" href="scrollykirk://open">Open the Scrolly Kirk app &rarr;</a>
           <a class="btn" id="phone" href="https://www.instagram.com/">Phone-size browser window</a>
         </div>
+        <p class="hint" id="fail" hidden>Nothing happened? Your browser blocked the link. Start <code>Scrolly-Kirk.exe</code> from its desktop shortcut or the Start menu instead, or in Firefox type <code>scrollykirk://open</code> into the address bar once and allow it.</p>
         <p class="hint reveal" id="hint">First time? Double-click <code>Scrolly-Kirk.exe</code> once so Windows learns the button. After that this button starts it, and your browser may ask once to allow it.</p>
       </div>
       <div class="stage reveal" aria-hidden="true">
@@ -177,6 +178,15 @@
   </main>
 
   <script>
+    // If the browser silently refuses the app link, say so instead of doing nothing.
+    document.getElementById("app").addEventListener("click", function () {
+      var left = false;
+      var on = function () { left = true; };
+      window.addEventListener("blur", on, { once: true });
+      document.addEventListener("visibilitychange", on, { once: true });
+      setTimeout(function () { if (!left) document.getElementById("fail").hidden = false; }, 1800);
+    });
+
     // Phone-size window: a narrow window makes Instagram use its mobile layout.
     document.getElementById("phone").addEventListener("click", function (e) {
       // Big, tall phone shape that fits the screen height, centered.
