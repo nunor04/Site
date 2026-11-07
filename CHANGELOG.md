@@ -8,6 +8,13 @@ Versioning follows MAJOR.MINOR.MICRO:
 
 Every release is also a git tag (`vX.Y.Z`). The version lives in `package.json`.
 
+## 1.8.0
+- Start the app from a website: the app registers a scrollykirk:// link with Windows, and the site button Open the Scrolly Kirk app launches it (works from Firefox, Chrome, anything).
+- Only one copy runs; opening it again focuses the open window.
+- The exe is now always named Scrolly-Kirk.exe so the link keeps working after updates.
+- Login is saved to disk before the app quits.
+- Site: simplified; the extension steps are gone (the extension stays in the repo).
+
 ## 1.7.2
 - Firefox support: extension manifest now has a Firefox id, and the site shows Firefox install steps (first when you are on Firefox).
 

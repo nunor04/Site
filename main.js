@@ -45,6 +45,9 @@ function isAllowed(url) {
   }
 }
 
+let mainWin = null;
+let flushAll = async () => {};
+
 function createWindow() {
   const ses = session.fromPartition("persist:instagram"); // keeps you logged in
   ses.setUserAgent(MOBILE_UA);
@@ -70,19 +73,20 @@ function createWindow() {
       })
       .catch(() => {});
   });
-  const flush = () => {
-    ses.cookies.flushStore().catch(() => {});
-    ses.flushStorageData();
+  flushAll = async () => {
+    try {
+      await ses.cookies.flushStore();
+      ses.flushStorageData();
+    } catch {}
   };
-  setInterval(flush, 15000);
-  app.on("before-quit", flush);
+  setInterval(flushAll, 15000);
 
   // Open big: nearly the full screen height, in a tall phone shape (1:2).
   const work = screen.getPrimaryDisplay().workAreaSize;
   const startH = Math.min(work.height - 20, 1200);
   const startW = Math.max(360, Math.min(Math.round(startH / 2), MAX_PHONE_WIDTH));
 
-  const win = new BrowserWindow({
+  mainWin = new BrowserWindow({
     width: startW,
     height: startH,
     center: true,
@@ -102,19 +106,19 @@ function createWindow() {
       spellcheck: false,
     },
   });
-  win.contentView.addChildView(view);
+  mainWin.contentView.addChildView(view);
 
   function layout() {
-    const [w, h] = win.getContentSize();
+    const [w, h] = mainWin.getContentSize();
     const vw = Math.min(w, MAX_PHONE_WIDTH);
     view.setBounds({ x: Math.round((w - vw) / 2), y: 0, width: vw, height: h });
   }
   layout();
-  win.on("resize", layout);
-  win.on("enter-full-screen", layout);
-  win.on("leave-full-screen", layout);
-  win.on("maximize", layout);
-  win.on("unmaximize", layout);
+  mainWin.on("resize", layout);
+  mainWin.on("enter-full-screen", layout);
+  mainWin.on("leave-full-screen", layout);
+  mainWin.on("maximize", layout);
+  mainWin.on("unmaximize", layout);
 
   const wc = view.webContents;
   wc.setUserAgent(MOBILE_UA);
@@ -166,5 +170,38 @@ function createWindow() {
   wc.loadURL("https://www.instagram.com/");
 }
 
-app.whenReady().then(createWindow);
-app.on("window-all-closed", () => app.quit());
+// ---- Starting the app from a website: scrollykirk://open ----
+const PROTOCOL = "scrollykirk";
+function registerProtocol() {
+  try {
+    if (process.defaultApp) {
+      // running from source (npm start)
+      app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, [path.resolve(process.argv[1])]);
+    } else {
+      // packaged portable .exe: register the real .exe, not its temp unpack folder
+      app.setAsDefaultProtocolClient(PROTOCOL, process.env.PORTABLE_EXECUTABLE_FILE || process.execPath);
+    }
+  } catch {}
+}
+
+function focusMain() {
+  if (!mainWin) return;
+  if (mainWin.isMinimized()) mainWin.restore();
+  mainWin.show();
+  mainWin.focus();
+}
+
+if (!app.requestSingleInstanceLock()) {
+  app.quit(); // already open: the running copy gets focused instead
+} else {
+  app.on("second-instance", focusMain);
+  app.whenReady().then(() => {
+    registerProtocol();
+    createWindow();
+  });
+  // Save the login to disk before quitting.
+  app.on("window-all-closed", async () => {
+    await flushAll();
+    app.quit();
+  });
+}

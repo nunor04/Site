@@ -109,6 +109,8 @@
     .card h3 { margin: 0 0 6px; font-size: 1.15rem; }
     .card p { margin: 0; color: var(--mute); font-size: 15px; }
 
+    .hint { color: var(--mute); font-size: 14px; max-width: 30rem; margin-top: 18px; }
+    .hint code { background: rgba(255,255,255,.1); padding: .1em .4em; border-radius: 6px; }
     details { margin-top: 56px; max-width: 34rem; color: var(--mute); }
     summary { cursor: pointer; font-weight: 600; color: var(--ink); }
     details code { background: rgba(255,255,255,.1); padding: .1em .4em; border-radius: 6px; }
@@ -138,9 +140,10 @@
         <h1 class="reveal"><span class="grad">Instagram,</span><br>your way.</h1>
         <p class="lead reveal">A phone-style window, a quiet volume bar on every video, and a most-viewed list for any profile.</p>
         <div class="btns reveal">
-          <a class="btn primary" id="phone" href="https://www.instagram.com/">Open Instagram (phone size) &rarr;</a>
-          <a class="btn" href="#features">See what's inside</a>
+          <a class="btn primary" id="app" href="scrollykirk://open">Open the Scrolly Kirk app &rarr;</a>
+          <a class="btn" id="phone" href="https://www.instagram.com/">Phone-size browser window</a>
         </div>
+        <p class="hint reveal" id="hint">First time? Double-click <code>Scrolly-Kirk.exe</code> once so Windows learns the button. After that this button starts it, and your browser may ask once to allow it.</p>
       </div>
       <div class="stage reveal" aria-hidden="true">
         <div class="phone" id="phoneMock">
@@ -165,10 +168,8 @@
       </div>
 
       <details class="reveal" id="get">
-        <summary>Get the app or extension</summary>
-        <p><strong>Desktop app</strong> (works everywhere, nothing else needed): run <code>npm install</code> then <code>npm start</code>, or build the single <code>.exe</code> with <code>npm run dist</code>.</p>
-        <p id="ff"><strong>Firefox</strong> (temporary, until you close Firefox): open <code>about:debugging#/runtime/this-firefox</code>, click <em>Load Temporary Add-on</em>, and choose <code>extension/manifest.json</code> from the <a href="https://github.com/nunor04/Site" style="color:var(--c)">repository</a>.</p>
-        <p id="ch"><strong>Chrome, Edge, Brave:</strong> open <code>chrome://extensions</code>, turn on Developer mode, click <em>Load unpacked</em> and choose the <code>extension</code> folder.</p>
+        <summary>Build the app yourself</summary>
+        <p>In the <a href="https://github.com/nunor04/Site" style="color:var(--c)">repository</a> folder run <code>npm install</code> then <code>npm run dist</code>. The app is created at <code>dist/Scrolly-Kirk.exe</code>.</p>
       </details>
     </section>
 
@@ -187,12 +188,6 @@
         "popup=yes,width=" + wd + ",height=" + h + ",left=" + left + ",top=" + top);
       if (w) e.preventDefault();
     });
-
-    // Show Firefox steps first when you are on Firefox.
-    if (/firefox/i.test(navigator.userAgent)) {
-      var g = document.getElementById("get"), ff = document.getElementById("ff");
-      g.insertBefore(ff, g.children[1]); g.open = true;
-    }
 
     // Show the real version from package.json so it never goes stale.
     fetch("package.json").then(function (r) { return r.json(); }).then(function (p) {
